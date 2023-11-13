@@ -1,4 +1,4 @@
-<?php require_once('sections/header.php'); ?>
+<?php require_once 'sections/header.php' ; ?>
 
     <div class="container-fluid min-vh-100 d-flex flex-column">
         <div class="row flex-grow-1">
@@ -37,4 +37,4 @@
     </div>
 
 
-    <?php require_once('sections/footer.php'); ?>
+    <?php require_once 'sections/footer.php'; ?>
