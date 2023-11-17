@@ -46,10 +46,20 @@ if (isset($_POST['do-login'])) {
     }
 }
 
-if(isset($_GET['logout'])){
+// do logout
+if (isset($_GET['logout'])) {
     session_start();
     unset($_SESSION['loggedIn']);
     header('Location: login.php');
+}
+
+// Get user note
+if (isset($_POST['user-note'])) {
+    $userNote = $_POST['user-note'];
+    $addToNote = mysqli_query($db, "INSERT INTO notes (note_text) VALUES('$userNote')");
+    if ($addToNote) {
+        header('Location: ../index.php');
+    }
 }
 
 // Set Message
@@ -77,4 +87,20 @@ function checkLogin()
     if (!isset($_SESSION['loggedIn'])) {
         header('Location: login.php');
     }
+}
+
+// get user notes
+function getUserNotes($limit = false)
+{
+    global $db;
+    if($limit){
+    $getNotes = mysqli_query($db, "SELECT * FROM notes ORDER BY id DESC LIMIT $limit");
+    }else{
+        $getNotes = mysqli_query($db, "SELECT * FROM notes ORDER BY id DESC ");
+    }
+    $userNotes = [];
+    while ($notes = mysqli_fetch_array($getNotes)) {
+        $userNotes[] = $notes;
+    }
+    return $userNotes;
 }
