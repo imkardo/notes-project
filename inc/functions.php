@@ -53,10 +53,11 @@ if (isset($_GET['logout'])) {
     header('Location: login.php');
 }
 
-// Get user note
+//Add to note
 if (isset($_POST['user-note'])) {
     $userNote = $_POST['user-note'];
-    $addToNote = mysqli_query($db, "INSERT INTO notes (note_text) VALUES('$userNote')");
+    $userId = getUserId();
+    $addToNote = mysqli_query($db, "INSERT INTO notes (note_text, user_id) VALUES('$userNote', '$userId')");
     if ($addToNote) {
         header('Location: ../index.php');
     }
@@ -93,14 +94,26 @@ function checkLogin()
 function getUserNotes($limit = false)
 {
     global $db;
-    if($limit){
-    $getNotes = mysqli_query($db, "SELECT * FROM notes ORDER BY id DESC LIMIT $limit");
-    }else{
-        $getNotes = mysqli_query($db, "SELECT * FROM notes ORDER BY id DESC ");
+    $userId = getUserId();
+    if ($limit) {
+        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' ORDER BY id DESC LIMIT $limit");
+    } else {
+        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' ORDER BY id DESC ");
     }
     $userNotes = [];
     while ($notes = mysqli_fetch_array($getNotes)) {
         $userNotes[] = $notes;
     }
     return $userNotes;
+}
+
+// Get user id
+function getUserId()
+{
+    global $db;
+    session_start();
+    $username = $_SESSION['loggedIn'];
+    $getUser = mysqli_query($db, "SELECT * FROM users WHERE username ='$username' ");
+    $userArray = mysqli_fetch_array($getUser);
+    return $userArray['id'];
 }
