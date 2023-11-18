@@ -48,7 +48,7 @@ checkLogin() ?>
                             <?php $doneNotes = showDoneNotes();
                             foreach($doneNotes as $doneNote){
                             ?>
-                            <li><a href="#"><i class="fas fa-trash"></i></a><?php echo $doneNote['note_text']; ?></li>
+                            <li><a href="?delete=<?php echo $doneNote['id'] ?>"><i class="fas fa-trash"></i></a><?php echo $doneNote['note_text']; ?></li>
                             <?php } ?>
                         </ul>
                     </div>

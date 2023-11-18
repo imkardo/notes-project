@@ -102,7 +102,7 @@ function getUserNotes($limit = false)
     }
     return $userNotes;
 }
-
+// Show Done Notes
 function showDoneNotes()
 {
     global $db;
@@ -113,6 +113,11 @@ function showDoneNotes()
         $doneNotes[] = $showDoneNotes;
     }
     return $doneNotes;
+}
+//Delete Notes
+if (isset($_GET['delete'])) {
+    $deleteNoteId = $_GET['delete'];
+    $deleteNotes = mysqli_query($db, "DELETE FROM notes WHERE id='$deleteNoteId'");
 }
 // Get user id
 function getUserId()
