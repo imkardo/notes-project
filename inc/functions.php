@@ -1,6 +1,6 @@
 <?php
 require_once 'db.php';
-
+session_start();
 if (isset($_POST['do-register'])) {
     $displayname = $_POST['display-name'];
     $username = $_POST['username'];
@@ -37,7 +37,6 @@ if (isset($_POST['do-login'])) {
 
     $checkUser = mysqli_query($db, "SELECT * FROM users WHERE username = '$username' AND password = '$password'");
     if (mysqli_num_rows($checkUser) > 0) {
-        session_start();
         $_SESSION['loggedIn'] = $username;
         header('Location: ../index.php');
     } else {
@@ -48,7 +47,7 @@ if (isset($_POST['do-login'])) {
 
 // do logout
 if (isset($_GET['logout'])) {
-    session_start();
+
     unset($_SESSION['loggedIn']);
     header('Location: login.php');
 }
@@ -66,7 +65,6 @@ if (isset($_POST['user-note'])) {
 // Set Message
 function setMessage($message)
 {
-    session_start();
     $_SESSION['message'] = $message;
 }
 
@@ -74,7 +72,6 @@ function setMessage($message)
 // show messages
 function showMessage()
 {
-    session_start();
     if (isset($_SESSION['message'])) {
         echo "<div class='alert alert-warning m-3'>" . $_SESSION['message'] . "</div>";
         unset($_SESSION['message']);
@@ -84,7 +81,6 @@ function showMessage()
 // check login
 function checkLogin()
 {
-    session_start();
     if (!isset($_SESSION['loggedIn'])) {
         header('Location: login.php');
     }
@@ -111,9 +107,18 @@ function getUserNotes($limit = false)
 function getUserId()
 {
     global $db;
-    session_start();
     $username = $_SESSION['loggedIn'];
     $getUser = mysqli_query($db, "SELECT * FROM users WHERE username ='$username' ");
     $userArray = mysqli_fetch_array($getUser);
     return $userArray['id'];
+}
+
+//  Get user display name
+function getUserDisplayName()
+{
+    global $db;
+    $username = $_SESSION['loggedIn'];
+    $getUser = mysqli_query($db, "SELECT * FROM users WHERE username ='$username' ");
+    $userArray = mysqli_fetch_array($getUser);
+    return $userArray['display_name'];
 }
