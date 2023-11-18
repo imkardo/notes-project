@@ -1,5 +1,6 @@
 <?php require_once 'sections/header.php';
-checkLogin() ?>
+checkLogin();
+$userData = getUserData(); ?>
 
 <div class="container-fluid min-vh-100 d-flex flex-column">
     <div class="row flex-grow-1">
@@ -20,8 +21,8 @@ checkLogin() ?>
             <div class="bg">
                 <a class="profile"><i class="fas fa-user"></i>مشاهده پروفایل</a>
                 <div class="titles">
-                    <h1 class="title">سلام <?php echo getUserDisplayName(); ?></h1>
-                    <h2 class="title">روزتو برنامه ریزی کن لذت ببر...</h2>
+                    <h1 class="title"><?php echo $userData['title'] . " " . $userData['display_name']; ?></h1>
+                    <h2 class="title"><?php echo $userData['subtitle']?></h2>
                 </div>
             </div>
 

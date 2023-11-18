@@ -1,5 +1,6 @@
 <?php require_once 'sections/header.php';
-checkLogin() ?>
+checkLogin();
+$userData = getUserData(); ?>
 
 <div class="container-fluid min-vh-100 d-flex flex-column">
     <div class="row flex-grow-1">
@@ -20,8 +21,8 @@ checkLogin() ?>
             <div class="bg">
                 <a class="profile"><i class="fas fa-user"></i>مشاهده پروفایل</a>
                 <div class="titles">
-                    <h1 class="title">سلام <?php echo getUserDisplayName(); ?></h1>
-                    <h2 class="title">روزتو برنامه ریزی کن لذت ببر...</h2>
+                    <h1 class="title"><?php echo $userData['title'] . " " . $userData['display_name']; ?></h1>
+                    <h2 class="title"><?php echo $userData['subtitle']?></h2>
                 </div>
             </div>
 
@@ -29,13 +30,14 @@ checkLogin() ?>
                 <div class="col-lg-12">
                     <div class="box">
                         <h2><i class="fas fa-wrench"></i>تنظیمات</h2>
-                        <form action="">
+                        <?php showMessage() ?>
+                        <form action="inc/functions.php" method="post">
                             <div class="row p-4">
-                                <div class="col-4"><input type="text" class="form-control" placeholder="نام شما"></div>
-                                <div class="col-4"><input type="text" class="form-control" placeholder="عنوان اصلی"></div>
-                                <div class="col-4"><input type="text" class="form-control" placeholder="عنوان فرعی"></div>
+                                <div class="col-4"><input type="text" name="display-name" value="<?php echo $userData['display_name']; ?>" class="form-control" placeholder="نام شما"></div>
+                                <div class="col-4"><input type="text" name="title" value="<?php echo $userData['title']; ?>" class="form-control" placeholder="عنوان اصلی"></div>
+                                <div class="col-4"><input type="text" name="subtitle" value="<?php echo $userData['subtitle']; ?>" class="form-control" placeholder="عنوان فرعی"></div>
                             </div>
-                            <input type="submit" class="btn btn-success ms-4" value="بروزرسانی">
+                            <input type="submit" name="do-update" class="btn btn-success ms-4" value="بروزرسانی">
                         </form>
                     </div>
                 </div>

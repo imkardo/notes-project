@@ -154,7 +154,7 @@ if (isset($_GET['delete'])) {
     }
 }
 // Undo Done Notes
-if(isset($_GET['undo'])){
+if (isset($_GET['undo'])) {
     $undoNoteId = $_GET['undo'];
     $undoDone = mysqli_query($db, "UPDATE notes SET is_done = '0' WHERE id ='$undoNoteId'");
     if ($undoDone) {
@@ -174,5 +174,29 @@ if (isset($_GET['search'])) {
             $searchResults[] = $results;
         }
         return $searchResults;
+    }
+}
+
+// Get user data for setting page
+function getUserData()
+{
+    global $db;
+    $userId = getUserId();
+
+    $getUsername = mysqli_query($db, "SELECT * FROM users WHERE id ='$userId'");
+    $userData = mysqli_fetch_array($getUsername);
+    return $userData;
+}
+
+// Update User Data from setting
+if (isset($_POST['do-update'])) {
+    $newDisplayName =  $_POST['display-name'];
+    $newTitle =  $_POST['title'];
+    $newSubtitle =  $_POST['subtitle'];
+    $userId = getUserId();
+    $updateSetting = mysqli_query($db, "UPDATE users SET display_name='$newDisplayName' , title='$newTitle' , subtitle='$newSubtitle' WHERE id='$userId'");
+    if ($updateSetting) {
+        setMessage('اطلاعات با موفقیت بروزرسانی شد');
+        header('Location: ../setting.php');
     }
 }
