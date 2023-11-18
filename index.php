@@ -6,10 +6,7 @@ checkLogin() ?>
             <h2 class="logo">یادداشت ها</h2>
             <div class="devider"></div>
             <div class="searchbox">
-                <form action="">
-                    <a href="#"><i class="fas fa-magnifying-glass"></i></a>
-                    <input type="text" placeholder="جستجو">
-                </form>
+                <?php require_once 'sections/search.php'; ?>
             </div>
             <?php require_once 'sections/menu.php'; ?>
 

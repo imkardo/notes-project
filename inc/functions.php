@@ -114,11 +114,7 @@ function showDoneNotes()
     }
     return $doneNotes;
 }
-//Delete Notes
-if (isset($_GET['delete'])) {
-    $deleteNoteId = $_GET['delete'];
-    $deleteNotes = mysqli_query($db, "DELETE FROM notes WHERE id='$deleteNoteId'");
-}
+
 // Get user id
 function getUserId()
 {
@@ -146,5 +142,30 @@ if (isset($_GET['isDone'])) {
     $updateDone = mysqli_query($db, "UPDATE notes SET is_done = '1' WHERE id ='$noteId'");
     if ($updateDone) {
         header('Location: notes.php');
+    }
+}
+
+//Delete Notes
+if (isset($_GET['delete'])) {
+    $deleteNoteId = $_GET['delete'];
+    $deleteNotes = mysqli_query($db, "DELETE FROM notes WHERE id='$deleteNoteId'");
+    if ($deleteNotes) {
+        header('Location: notes.php');
+    }
+}
+
+// Search Notes 
+if (isset($_GET['search'])) {
+    function getSearchResult()
+    {
+        global $db;
+        $searchValue = $_GET['search'];
+        $userId = getUserId();
+        $search = mysqli_query($db, "SELECT * FROM notes WHERE note_text LIKE '%$searchValue%' AND user_id = '$userId' AND is_done='0'");
+        $searchResults = [];
+        while ($results = mysqli_fetch_array($search)) {
+            $searchResults[] = $results;
+        }
+        return $searchResults;
     }
 }

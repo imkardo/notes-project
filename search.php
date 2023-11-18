@@ -28,15 +28,13 @@ checkLogin() ?>
             <div class="row mycards mx-auto notes">
                 <div class="col-lg-12">
                     <div class="box">
-                        <h2><i class="fas fa-wrench"></i>تنظیمات</h2>
-                        <form action="">
-                            <div class="row p-4">
-                                <div class="col-4"><input type="text" class="form-control" placeholder="نام شما"></div>
-                                <div class="col-4"><input type="text" class="form-control" placeholder="عنوان اصلی"></div>
-                                <div class="col-4"><input type="text" class="form-control" placeholder="عنوان فرعی"></div>
-                            </div>
-                            <input type="submit" class="btn btn-success ms-4" value="بروزرسانی">
-                        </form>
+                        <h2><i class="fas fa-wrench"></i>جستجو</h2>
+                        <ul class="list">
+                            <?php $searchResults =  getSearchResult();
+                             foreach($searchResults as $searchResult){ ?>
+                            <li><?php echo $searchResult['note_text']; ?></li>
+                            <?php } ?>
+                        </ul>
                     </div>
                 </div>
 
