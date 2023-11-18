@@ -92,9 +92,9 @@ function getUserNotes($limit = false)
     global $db;
     $userId = getUserId();
     if ($limit) {
-        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' ORDER BY id DESC LIMIT $limit");
+        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' AND is_done='0' ORDER BY id DESC LIMIT $limit");
     } else {
-        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' ORDER BY id DESC ");
+        $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' AND is_done='0' ORDER BY id DESC ");
     }
     $userNotes = [];
     while ($notes = mysqli_fetch_array($getNotes)) {
@@ -103,6 +103,17 @@ function getUserNotes($limit = false)
     return $userNotes;
 }
 
+function showDoneNotes()
+{
+    global $db;
+    $userId = getUserId();
+    $getNotes = mysqli_query($db, "SELECT * FROM notes WHERE user_id='$userId' AND is_done='1' ORDER BY id DESC");
+    $doneNotes = [];
+    while ($showDoneNotes = mysqli_fetch_array($getNotes)) {
+        $doneNotes[] = $showDoneNotes;
+    }
+    return $doneNotes;
+}
 // Get user id
 function getUserId()
 {
@@ -121,4 +132,14 @@ function getUserDisplayName()
     $getUser = mysqli_query($db, "SELECT * FROM users WHERE username ='$username' ");
     $userArray = mysqli_fetch_array($getUser);
     return $userArray['display_name'];
+}
+
+// Is done
+if (isset($_GET['isDone'])) {
+    // echo $_GET['isDone']; 
+    $noteId = $_GET['isDone'];
+    $updateDone = mysqli_query($db, "UPDATE notes SET is_done = '1' WHERE id ='$noteId'");
+    if ($updateDone) {
+        header('Location: notes.php');
+    }
 }

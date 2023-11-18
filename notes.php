@@ -35,7 +35,7 @@ checkLogin() ?>
                         <ul class="list">
                             <?php $notes = getUserNotes();
                             foreach ($notes as $note) { ?>
-                                <li><a href="#"><i class="fas fa-square-check"></i></a><?php echo $note['note_text'] ?></li>
+                                <li><a href="?isDone=<?php echo $note['id'] ?>"><i class="fas fa-square-check"></i></a><?php echo $note['note_text'] ?></li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -45,10 +45,11 @@ checkLogin() ?>
                     <div class="box">
                         <h2><i class="fas fa-square-check"></i>انجام شده ها</h2>
                         <ul class="list done">
-                            <li><a href="#"><i class="fas fa-trash"></i></a>تست</li>
-                            <li><a href="#"><i class="fas fa-trash"></i></a>تست</li>
-                            <li><a href="#"><i class="fas fa-trash"></i></a>تست</li>
-                            <li><a href="#"><i class="fas fa-trash"></i></a>تست</li>
+                            <?php $doneNotes = showDoneNotes();
+                            foreach($doneNotes as $doneNote){
+                            ?>
+                            <li><a href="#"><i class="fas fa-trash"></i></a><?php echo $doneNote['note_text']; ?></li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>
