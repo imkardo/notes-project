@@ -43,9 +43,13 @@ checkLogin() ?>
                         <h2><i class="fas fa-square-check"></i>انجام شده ها</h2>
                         <ul class="list done">
                             <?php $doneNotes = showDoneNotes();
-                            foreach($doneNotes as $doneNote){
+                            foreach ($doneNotes as $doneNote) {
                             ?>
-                            <li><a href="?delete=<?php echo $doneNote['id'] ?>"><i class="fas fa-trash"></i></a><?php echo $doneNote['note_text']; ?></li>
+                                <li>
+                                    <a href="?delete=<?php echo $doneNote['id'] ?>" class="del"><i class="fas fa-trash "></i></a>
+                                    <a href="?undo=<?php echo $doneNote['id'] ?>" class="undo"><i class="fa-solid fa-rotate-left"></i></a>
+                                    <span><?php echo $doneNote['note_text']; ?></span>
+                                </li>
                             <?php } ?>
                         </ul>
                     </div>

@@ -229,7 +229,7 @@ input:focus, textarea:focus {
     border-bottom: none;
 }
 
-.content .done li{
+.content .done span{
     text-decoration: line-through;
 }
 
@@ -237,10 +237,13 @@ input:focus, textarea:focus {
     font-size: 16px !important;
     vertical-align: -5px !important;
 }
-.content .done a:hover svg{
-    color: #D61C4E !important;
-}
+ .content .done .del:hover svg{
+    color: #D61C4E ;
+} 
 
+.content .done .undo:hover svg{
+    color: #1c5dd6 ;
+}
 .content .list li svg {
     color: #575757;
     padding-left: 7px;

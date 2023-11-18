@@ -153,7 +153,14 @@ if (isset($_GET['delete'])) {
         header('Location: notes.php');
     }
 }
-
+// Undo Done Notes
+if(isset($_GET['undo'])){
+    $undoNoteId = $_GET['undo'];
+    $undoDone = mysqli_query($db, "UPDATE notes SET is_done = '0' WHERE id ='$undoNoteId'");
+    if ($undoDone) {
+        header('Location: notes.php');
+    }
+}
 // Search Notes 
 if (isset($_GET['search'])) {
     function getSearchResult()
